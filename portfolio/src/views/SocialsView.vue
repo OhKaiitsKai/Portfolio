@@ -54,7 +54,7 @@ const socials: SocialLink[] = [
     description:
       'The artists, albums & songs that accompany my creative process.',
     action: 'Listen on Apple Music',
-    url: 'https://music.apple.com/profile/aymeealvarezv',
+    url: 'https://music.apple.com/profile/_ohkaiitskai',
     icon: Music2,
     external: true,
     glowClass: 'group-hover:bg-red-300/20',
@@ -132,7 +132,7 @@ const socials: SocialLink[] = [
                  text-nebula-light md:text-xl"
         >
           Every platform represents a different part of my story.
-          Choose a destination and explore my code, art, music &
+          Choose a destination & explore my code, art, music &
           creative world.
         </p>
       </div>
