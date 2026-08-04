@@ -34,18 +34,67 @@ const router = createRouter({
       name: 'contact',
       component: () => import('../views/ContactView.vue'),
     },
+
+    // Admin
     {
       path: '/admin',
-      name: 'admin',
+      redirect: {
+        name: 'admin-login',
+      },
+    },
+    {
+      path: '/admin/login',
+      name: 'admin-login',
       component: () => import('../admin/LoginView.vue'),
     },
     {
       path: '/admin/dashboard',
       name: 'admin-dashboard',
       component: () => import('../admin/DashboardView.vue'),
-      meta: { requiresAuth: true },
-    }
-
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/blog',
+      name: 'admin-blog',
+      component: () => import('../admin/BlogView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/blog/new',
+      name: 'admin-blog-new',
+      component: () => import('../admin/NewPostView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/board',
+      name: 'admin-board',
+      component: () => import('../admin/BoardView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/messages',
+      name: 'admin-messages',
+      component: () => import('../admin/MessagesView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/admin/settings',
+      name: 'admin-settings',
+      component: () => import('../admin/SettingsView.vue'),
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 
   scrollBehavior() {
