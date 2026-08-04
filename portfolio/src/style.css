@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@theme {
+  --color-starlight: #c7dced;
+  --color-nebula-light: #9dcddc;
+  --color-nebula: #5692a9;
+  --color-cosmic: #044568;
+  --color-deep-space: #062b43;
+}
+
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color: var(--color-starlight);
+  background-color: var(--color-deep-space);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(
+      circle at 20% 15%,
+      rgb(86 146 169 / 25%),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 30%,
+      rgb(157 205 220 / 14%),
+      transparent 30%
+    ),
+    #062b43;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  color: #062b43;
+  background: #c7dced;
+}
