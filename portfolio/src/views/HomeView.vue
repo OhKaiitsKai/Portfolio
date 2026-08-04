@@ -2,24 +2,33 @@
 interface Technology {
   name: string
   description: string
+  label: string
 }
 
 const technologies: Technology[] = [
   {
     name: 'Vue.js',
-    description: 'The framework used to build the interface.',
+    label: 'Frontend framework',
+    description:
+      'Used to create a reactive, component-based and maintainable interface.',
   },
   {
     name: 'TypeScript',
-    description: 'Used for safer and more maintainable code.',
+    label: 'Type safety',
+    description:
+      'Helps prevent errors and keeps the project easier to understand as it grows.',
   },
   {
     name: 'Tailwind CSS',
-    description: 'Responsible for the responsive visual system.',
+    label: 'Visual system',
+    description:
+      'Used to build the responsive layout and the custom galactic interface.',
   },
   {
     name: 'Firebase',
-    description: 'Used for dynamic content, storage and hosting.',
+    label: 'Backend services',
+    description:
+      'Provides storage, dynamic content, authentication and deployment tools.',
   },
 ]
 </script>
@@ -92,34 +101,80 @@ const technologies: Technology[] = [
           />
         </div>
       </div>
+      <div
+         class="absolute inset-x-0 bottom-0 h-px
+         bg-gradient-to-r
+         from-transparent
+         via-nebula/50
+         to-transparent"
+          ></div>
     </section>
-    <section class="px-6 py-24">
-  <div class="mx-auto max-w-7xl">
-    <p
-      class="text-sm uppercase tracking-[0.3em]
-             text-nebula-light"
+    
+    <section class="relative px-6 py-24">
+     <div class="mx-auto max-w-7xl">
+      <div class="max-w-3xl">
+      <p
+        class="text-sm uppercase tracking-[0.35em]
+               text-nebula-light"
+       >
+        Built with
+      </p>
+
+      <h2
+        class="mt-4 text-4xl font-bold tracking-tight
+               text-starlight md:text-5xl"
+      >
+        The technology behind this universe.
+      </h2>
+
+      <p
+        class="mt-6 text-lg leading-8
+               text-nebula-light"
+      >
+        This portfolio combines modern web technologies with a
+        visual identity inspired by galaxies, creative exploration
+        and digital art.
+      </p>
+    </div>
+
+    <div
+      class="mt-12 grid gap-6
+             sm:grid-cols-2 lg:grid-cols-4"
     >
-      Built with
-    </p>
-
-    <h2 class="mt-4 text-3xl font-bold text-starlight md:text-5xl">
-      The technology behind this universe
-    </h2>
-
-    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <article
         v-for="technology in technologies"
         :key="technology.name"
-        class="rounded-3xl border border-nebula/20
-               bg-cosmic/30 p-6 backdrop-blur-md
-               transition hover:-translate-y-1
-               hover:border-nebula/60"
+        class="group relative overflow-hidden rounded-3xl
+               border border-nebula/20 bg-cosmic/25 p-7
+               backdrop-blur-md transition duration-300
+               hover:-translate-y-2 hover:border-nebula/60
+               hover:bg-cosmic/40"
       >
-        <h3 class="text-xl font-semibold text-starlight">
+        <div
+          class="absolute -right-10 -top-10 h-28 w-28
+                 rounded-full bg-nebula/10 blur-2xl
+                 transition duration-300
+                 group-hover:bg-nebula/25"
+        ></div>
+
+        <p
+          class="relative text-xs uppercase tracking-[0.25em]
+                 text-nebula-light"
+        >
+          {{ technology.label }}
+        </p>
+
+        <h3
+          class="relative mt-5 text-2xl font-semibold
+                 text-starlight"
+        >
           {{ technology.name }}
         </h3>
 
-        <p class="mt-3 leading-7 text-nebula-light">
+        <p
+          class="relative mt-4 leading-7
+                 text-nebula-light"
+        >
           {{ technology.description }}
         </p>
       </article>
