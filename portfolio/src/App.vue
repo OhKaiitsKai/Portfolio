@@ -7,16 +7,22 @@ import AdminHeader from './components/layout/AdminHeader.vue'
 
 const route = useRoute()
 
-const isAdmin = computed(() =>
+const isAdminRoute = computed(() =>
   route.path.startsWith('/admin')
+)
+
+const isAdminLogin = computed(() =>
+  route.name === 'admin-login'
 )
 </script>
 
 <template>
   <div class="min-h-screen overflow-x-hidden">
-    <AppHeader v-if="!isAdmin" />
+    <AppHeader v-if="!isAdminRoute" />
 
-    <AdminHeader v-else />
+    <AdminHeader
+      v-else-if="!isAdminLogin"
+    />
 
     <RouterView />
   </div>
