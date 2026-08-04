@@ -34,6 +34,18 @@ const router = createRouter({
       name: 'contact',
       component: () => import('../views/ContactView.vue'),
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('../admin/LoginView.vue'),
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'admin-dashboard',
+      component: () => import('../admin/DashboardView.vue'),
+      meta: { requiresAuth: true },
+    }
+
   ],
 
   scrollBehavior() {
