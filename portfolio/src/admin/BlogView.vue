@@ -31,6 +31,7 @@ import {
 
 import EditPostModal from '../components/admin/EditPostModal.vue'
 import BlogStats from '../components/admin/BlogStats.vue'
+import BlogFilters from '../components/admin/BlogFilters.vue'
 import { db, storage } from '../firebase/config'
 import type {
   BlogPost,
@@ -356,108 +357,17 @@ onMounted(loadPosts)
        />
 
       <!-- Filters -->
-      <section
-        class="mt-8 rounded-[2rem] border
-               border-nebula/20 bg-cosmic/20
-               p-5"
-      >
-        <div
-          class="grid gap-4
-                 lg:grid-cols-[minmax(0,1fr)_13rem_13rem_auto]"
-        >
-          <label class="relative">
-            <span class="sr-only">
-              Search articles
-            </span>
-
-            <Search
-              :size="19"
-              class="pointer-events-none absolute
-                     left-4 top-1/2 -translate-y-1/2
-                     text-nebula-light"
-              aria-hidden="true"
-            />
-
-            <input
-              v-model="searchQuery"
-              type="search"
-              placeholder="Search by title, category or tag..."
-              class="w-full rounded-2xl border
-                     border-nebula/30 bg-deep-space/60
-                     py-3 pl-12 pr-4 text-starlight
-                     outline-none transition
-                     placeholder:text-nebula-light/40
-                     focus:border-nebula-light"
-            />
-          </label>
-
-          <select
-            v-model="statusFilter"
-            aria-label="Filter by status"
-            class="rounded-2xl border border-nebula/30
-                   bg-deep-space px-4 py-3
-                   text-starlight outline-none
-                   focus:border-nebula-light"
-          >
-            <option value="all">
-              All statuses
-            </option>
-
-            <option value="published">
-              Published
-            </option>
-
-            <option value="draft">
-              Drafts
-            </option>
-          </select>
-
-          <select
-            v-model="categoryFilter"
-            aria-label="Filter by category"
-            class="rounded-2xl border border-nebula/30
-                   bg-deep-space px-4 py-3
-                   text-starlight outline-none
-                   focus:border-nebula-light"
-          >
-            <option value="all">
-              All categories
-            </option>
-
-            <option
-              v-for="category in categories"
-              :key="category"
-              :value="category"
-            >
-              {{ category }}
-            </option>
-          </select>
-
-          <button
-            type="button"
-            class="inline-flex items-center justify-center
-                   gap-2 rounded-full border
-                   border-nebula/40 px-5 py-3
-                   font-semibold transition
-                   hover:border-starlight
-                   hover:bg-starlight/10
-                   disabled:cursor-not-allowed
-                   disabled:opacity-50"
-            :disabled="isLoading"
-            @click="loadPosts"
-          >
-            <RefreshCw
-              :size="18"
-              :class="{
-                'animate-spin': isLoading,
-              }"
-              aria-hidden="true"
-            />
-
-            Refresh
-          </button>
-        </div>
-      </section>
+      <BlogFilters
+      :search-query="searchQuery"
+      :status-filter="statusFilter"
+      :category-filter="categoryFilter"
+      :categories="categories"
+      :is-loading="isLoading"
+      @update:search-query="searchQuery = $event"
+      @update:status-filter="statusFilter = $event"
+      @update:category-filter="categoryFilter = $event"
+      @refresh="loadPosts"
+      />
 
       <!-- Feedback -->
       <p
