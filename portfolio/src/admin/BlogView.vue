@@ -8,7 +8,6 @@ import {
   orderBy,
   query,
   serverTimestamp,
-  Timestamp,
   updateDoc,
 } from 'firebase/firestore'
 import {
@@ -28,37 +27,25 @@ import {
   Search,
   Send,
   Trash2,
-  X,
 } from 'lucide-vue-next'
 
+import EditPostModal from '../components/admin/EditPostModal.vue'
 import { db, storage } from '../firebase/config'
-
-type PostStatus = 'draft' | 'published'
-type StatusFilter = 'all' | PostStatus
-
-interface BlogPost {
-  id: string
-  title: string
-  slug: string
-  excerpt: string
-  content: string
-  coverImage: string
-  category: string
-  tags: string[]
-  status: PostStatus
-  readingTime: number
-  createdAt: Timestamp | null
-  updatedAt: Timestamp | null
-  publishedAt: Timestamp | null
-}
+import type {
+  BlogPost,
+  PostStatus,
+  StatusFilter,
+} from '../types/blog'
 
 const posts = ref<BlogPost[]>([])
+
 const searchQuery = ref('')
 const statusFilter = ref<StatusFilter>('all')
 const categoryFilter = ref('all')
 
 const isLoading = ref(true)
 const processingPostId = ref<string | null>(null)
+
 const errorMessage = ref('')
 const successMessage = ref('')
 
@@ -140,7 +127,9 @@ async function loadPosts(): Promise<void> {
         content: data.content ?? '',
         coverImage: data.coverImage ?? '',
         category: data.category ?? 'Uncategorized',
-        tags: Array.isArray(data.tags) ? data.tags : [],
+        tags: Array.isArray(data.tags)
+          ? data.tags
+          : [],
         status:
           data.status === 'published'
             ? 'published'
@@ -151,7 +140,7 @@ async function loadPosts(): Promise<void> {
         publishedAt: data.publishedAt ?? null,
       } satisfies BlogPost
     })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Unable to load posts:', error)
 
     errorMessage.value =
@@ -192,8 +181,11 @@ async function togglePostStatus(
       nextStatus === 'published'
         ? `"${post.title}" is now published.`
         : `"${post.title}" was moved to drafts.`
-  } catch (error) {
-    console.error('Unable to update article:', error)
+  } catch (error: unknown) {
+    console.error(
+      'Unable to update article status:',
+      error,
+    )
 
     errorMessage.value =
       'The article status could not be updated.'
@@ -216,6 +208,21 @@ function closeEditModal(): void {
   isEditModalOpen.value = false
 }
 
+function updatePostLocally(
+  updatedPost: BlogPost,
+): void {
+  const index = posts.value.findIndex(
+    (post) => post.id === updatedPost.id,
+  )
+
+  if (index === -1) return
+
+  posts.value[index] = updatedPost
+
+  successMessage.value =
+    `"${updatedPost.title}" was updated successfully.`
+}
+
 async function deleteCover(
   coverImage: string,
 ): Promise<void> {
@@ -228,7 +235,7 @@ async function deleteCover(
     )
 
     await deleteObject(imageReference)
-  } catch (error) {
+  } catch (error: unknown) {
     console.warn(
       'The cover image could not be deleted:',
       error,
@@ -262,8 +269,11 @@ async function deletePost(
 
     successMessage.value =
       `"${post.title}" was deleted.`
-  } catch (error) {
-    console.error('Unable to delete article:', error)
+  } catch (error: unknown) {
+    console.error(
+      'Unable to delete article:',
+      error,
+    )
 
     errorMessage.value =
       'The article could not be deleted.'
@@ -273,9 +283,11 @@ async function deletePost(
 }
 
 function formatDate(
-  timestamp: Timestamp | null,
+  timestamp: BlogPost['createdAt'],
 ): string {
-  if (!timestamp) return 'Pending timestamp'
+  if (!timestamp) {
+    return 'Pending timestamp'
+  }
 
   return new Intl.DateTimeFormat('en', {
     dateStyle: 'medium',
@@ -288,6 +300,7 @@ onMounted(loadPosts)
 <template>
   <main class="min-h-screen pb-24 pt-12 text-starlight">
     <section class="mx-auto max-w-7xl px-6">
+      <!-- Heading -->
       <div
         class="flex flex-col gap-7 border-b
                border-nebula/20 pb-9
@@ -334,6 +347,7 @@ onMounted(loadPosts)
         </RouterLink>
       </div>
 
+      <!-- Statistics -->
       <div class="mt-10 grid gap-5 sm:grid-cols-3">
         <article
           class="rounded-3xl border border-nebula/20
@@ -384,6 +398,7 @@ onMounted(loadPosts)
         </article>
       </div>
 
+      <!-- Filters -->
       <section
         class="mt-8 rounded-[2rem] border
                border-nebula/20 bg-cosmic/20
@@ -468,13 +483,17 @@ onMounted(loadPosts)
                    border-nebula/40 px-5 py-3
                    font-semibold transition
                    hover:border-starlight
-                   hover:bg-starlight/10"
+                   hover:bg-starlight/10
+                   disabled:cursor-not-allowed
+                   disabled:opacity-50"
             :disabled="isLoading"
             @click="loadPosts"
           >
             <RefreshCw
               :size="18"
-              :class="{ 'animate-spin': isLoading }"
+              :class="{
+                'animate-spin': isLoading,
+              }"
               aria-hidden="true"
             />
 
@@ -483,6 +502,7 @@ onMounted(loadPosts)
         </div>
       </section>
 
+      <!-- Feedback -->
       <p
         v-if="errorMessage"
         class="mt-6 rounded-2xl border
@@ -504,6 +524,7 @@ onMounted(loadPosts)
         {{ successMessage }}
       </p>
 
+      <!-- Loading -->
       <div
         v-if="isLoading"
         class="flex min-h-80 items-center
@@ -523,6 +544,7 @@ onMounted(loadPosts)
         </div>
       </div>
 
+      <!-- Empty state -->
       <section
         v-else-if="posts.length === 0"
         class="mt-10 rounded-[3rem] border
@@ -564,6 +586,7 @@ onMounted(loadPosts)
         </RouterLink>
       </section>
 
+      <!-- No search results -->
       <section
         v-else-if="filteredPosts.length === 0"
         class="mt-10 rounded-[2rem] border
@@ -579,6 +602,7 @@ onMounted(loadPosts)
         </p>
       </section>
 
+      <!-- Article list -->
       <section
         v-else
         class="mt-10 space-y-6"
@@ -592,6 +616,7 @@ onMounted(loadPosts)
                  hover:border-nebula/50
                  lg:grid-cols-[18rem_minmax(0,1fr)]"
         >
+          <!-- Cover -->
           <div
             class="relative min-h-56 overflow-hidden
                    bg-deep-space/60"
@@ -630,6 +655,7 @@ onMounted(loadPosts)
             </span>
           </div>
 
+          <!-- Post information -->
           <div
             class="flex flex-col justify-between
                    gap-7 p-6 md:p-8"
@@ -695,6 +721,7 @@ onMounted(loadPosts)
               </div>
             </div>
 
+            <!-- Actions -->
             <div
               class="flex flex-col gap-4
                      border-t border-nebula/20
@@ -719,6 +746,7 @@ onMounted(loadPosts)
                          transition
                          hover:border-starlight
                          hover:bg-starlight/10
+                         disabled:cursor-not-allowed
                          disabled:opacity-50"
                   :disabled="
                     processingPostId === post.id
@@ -764,6 +792,7 @@ onMounted(loadPosts)
                          transition
                          hover:border-starlight
                          hover:bg-starlight/10
+                         disabled:cursor-not-allowed
                          disabled:opacity-50"
                   :disabled="
                     processingPostId === post.id
@@ -807,6 +836,7 @@ onMounted(loadPosts)
                          text-sm font-semibold
                          text-red-200 transition
                          hover:bg-red-300/10
+                         disabled:cursor-not-allowed
                          disabled:opacity-50"
                   :disabled="
                     processingPostId === post.id
@@ -827,61 +857,11 @@ onMounted(loadPosts)
       </section>
     </section>
 
-    <Teleport to="body">
-      <div
-        v-if="isEditModalOpen && selectedPost"
-        class="fixed inset-0 z-[100] flex items-center
-               justify-center bg-deep-space/80
-               px-6 py-10 backdrop-blur-md"
-        @click.self="closeEditModal"
-      >
-        <section
-          class="relative max-h-[90vh] w-full max-w-4xl
-                 overflow-y-auto rounded-[2.5rem]
-                 border border-nebula/30
-                 bg-deep-space p-7 shadow-2xl
-                 md:p-10"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="edit-post-title"
-        >
-          <button
-            type="button"
-            class="absolute right-6 top-6
-                   flex h-10 w-10 items-center
-                   justify-center rounded-full
-                   border border-nebula/30
-                   text-nebula-light transition
-                   hover:border-starlight
-                   hover:text-starlight"
-            aria-label="Close edit modal"
-            @click="closeEditModal"
-          >
-            <X
-              :size="20"
-              aria-hidden="true"
-            />
-          </button>
-
-          <p
-            class="text-sm uppercase tracking-[0.35em]
-                   text-nebula-light"
-          >
-            Edit article
-          </p>
-
-          <h2
-            id="edit-post-title"
-            class="mt-4 pr-12 text-4xl font-bold"
-          >
-            {{ selectedPost.title }}
-          </h2>
-
-          <p class="mt-5 text-nebula-light">
-            The editable form will be added here next.
-          </p>
-        </section>
-      </div>
-    </Teleport>
+    <EditPostModal
+      :post="selectedPost"
+      :open="isEditModalOpen"
+      @close="closeEditModal"
+      @updated="updatePostLocally"
+    />
   </main>
 </template>
