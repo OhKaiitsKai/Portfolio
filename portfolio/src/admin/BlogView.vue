@@ -30,6 +30,7 @@ import {
 } from 'lucide-vue-next'
 
 import EditPostModal from '../components/admin/EditPostModal.vue'
+import BlogStats from '../components/admin/BlogStats.vue'
 import { db, storage } from '../firebase/config'
 import type {
   BlogPost,
@@ -348,55 +349,11 @@ onMounted(loadPosts)
       </div>
 
       <!-- Statistics -->
-      <div class="mt-10 grid gap-5 sm:grid-cols-3">
-        <article
-          class="rounded-3xl border border-nebula/20
-                 bg-cosmic/20 p-6"
-        >
-          <p
-            class="text-xs uppercase tracking-[0.25em]
-                   text-nebula-light"
-          >
-            Total articles
-          </p>
-
-          <p class="mt-3 text-4xl font-bold">
-            {{ posts.length }}
-          </p>
-        </article>
-
-        <article
-          class="rounded-3xl border border-nebula/20
-                 bg-cosmic/20 p-6"
-        >
-          <p
-            class="text-xs uppercase tracking-[0.25em]
-                   text-nebula-light"
-          >
-            Published
-          </p>
-
-          <p class="mt-3 text-4xl font-bold">
-            {{ publishedCount }}
-          </p>
-        </article>
-
-        <article
-          class="rounded-3xl border border-nebula/20
-                 bg-cosmic/20 p-6"
-        >
-          <p
-            class="text-xs uppercase tracking-[0.25em]
-                   text-nebula-light"
-          >
-            Drafts
-          </p>
-
-          <p class="mt-3 text-4xl font-bold">
-            {{ draftCount }}
-          </p>
-        </article>
-      </div>
+      <BlogStats
+       :total="posts.length"
+       :published="publishedCount"
+       :drafts="draftCount"
+       />
 
       <!-- Filters -->
       <section
