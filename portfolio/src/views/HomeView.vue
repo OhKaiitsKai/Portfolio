@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import VueLogo from '../assets/logos/vue.png'
+import TypeScriptLogo from '../assets/logos/typescript.png'
+import TailwindLogo from '../assets/logos/tailwindcss.png'
+import SassLogo from '../assets/logos/scss.png'
+import FirebaseLogo from '../assets/logos/firebase.png'
+
+interface TechnologyLogo {
+  src: string
+  alt: string
+}
+
 interface Technology {
   name: string
   description: string
   label: string
+  logos: TechnologyLogo[]
 }
 
 const technologies: Technology[] = [
@@ -11,33 +23,63 @@ const technologies: Technology[] = [
     label: 'Frontend framework',
     description:
       'Used to create a reactive, component-based & maintainable interface.',
+    logos: [
+      {
+        src: VueLogo,
+        alt: 'Vue.js logo',
+      },
+    ],
   },
   {
     name: 'TypeScript',
     label: 'Type safety',
     description:
       'Helps prevent errors & keeps the project easier to understand as it grows.',
+    logos: [
+      {
+        src: TypeScriptLogo,
+        alt: 'TypeScript logo',
+      },
+    ],
   },
   {
-    name: 'Tailwind CSS',
+    name: 'Tailwind CSS + SCSS',
     label: 'Visual system',
     description:
-      'Used to build the responsive layout & the custom galactic interface.',
+      'Tailwind CSS builds the responsive interface while SCSS powers reusable styles, custom animations & the galactic identity of this portfolio.',
+    logos: [
+      {
+        src: TailwindLogo,
+        alt: 'Tailwind CSS logo',
+      },
+      {
+        src: SassLogo,
+        alt: 'Sass logo',
+      },
+    ],
   },
   {
     name: 'Firebase',
     label: 'Backend services',
     description:
-      'Provides storage, dynamic content, authentication & deployment tools.',
+      'Provides Firestore, Storage, Authentication, dynamic content & deployment tools.',
+    logos: [
+      {
+        src: FirebaseLogo,
+        alt: 'Firebase logo',
+      },
+    ],
   },
 ]
 </script>
 
 <template>
   <main class="min-h-screen px-6 pt-32 text-starlight">
+    <!-- Hero -->
     <section
-      class="mx-auto grid min-h-[calc(100vh-8rem)] max-w-7xl
-             items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]"
+      class="relative mx-auto grid min-h-[calc(100vh-8rem)]
+             max-w-7xl items-center gap-12
+             lg:grid-cols-[1.1fr_0.9fr]"
     >
       <div>
         <p
@@ -48,8 +90,8 @@ const technologies: Technology[] = [
         </p>
 
         <h1
-          class="mt-6 max-w-4xl text-5xl font-bold leading-tight
-                 md:text-7xl lg:text-8xl"
+          class="mt-6 max-w-4xl text-5xl font-bold
+                 leading-tight md:text-7xl lg:text-8xl"
         >
           Welcome to my universe.
         </h1>
@@ -74,9 +116,10 @@ const technologies: Technology[] = [
 
           <RouterLink
             :to="{ name: 'board' }"
-            class="rounded-full border border-nebula/60 px-6 py-3
-                   font-semibold text-starlight transition
-                   hover:border-starlight hover:bg-starlight/10"
+            class="rounded-full border border-nebula/60
+                   px-6 py-3 font-semibold text-starlight
+                   transition hover:border-starlight
+                   hover:bg-starlight/10"
           >
             Explore my work
           </RouterLink>
@@ -85,14 +128,14 @@ const technologies: Technology[] = [
 
       <div class="relative mx-auto w-full max-w-md">
         <div
-          class="absolute inset-0 rounded-full bg-nebula/25
-                 blur-3xl"
+          class="absolute inset-0 rounded-full
+                 bg-nebula/25 blur-3xl"
         ></div>
 
         <div
-          class="relative aspect-[4/5] overflow-hidden rounded-[3rem]
-                 border border-nebula/30 bg-cosmic/50
-                 shadow-2xl"
+          class="relative aspect-[4/5] overflow-hidden
+                 rounded-[3rem] border border-nebula/30
+                 bg-cosmic/50 shadow-2xl"
         >
           <img
             src="../assets/images/kaipic.webp"
@@ -101,85 +144,107 @@ const technologies: Technology[] = [
           />
         </div>
       </div>
+
       <div
-         class="absolute inset-x-0 bottom-0 h-px
-         bg-gradient-to-r
-         from-transparent
-         via-nebula/50
-         to-transparent"
-          ></div>
+        class="absolute inset-x-0 bottom-0 h-px
+               bg-gradient-to-r from-transparent
+               via-nebula/50 to-transparent"
+      ></div>
     </section>
-    
-    <section class="relative px-6 py-24">
-     <div class="mx-auto max-w-7xl">
-      <div class="max-w-3xl">
-      <p
-        class="text-sm uppercase tracking-[0.35em]
-               text-nebula-light"
-       >
-        Built with
-      </p>
 
-      <h2
-        class="mt-4 text-4xl font-bold tracking-tight
-               text-starlight md:text-5xl"
-      >
-        The technology behind this universe.
-      </h2>
+    <!-- Technologies -->
+    <section class="relative py-24">
+      <div class="mx-auto max-w-7xl">
+        <div class="max-w-3xl">
+          <p
+            class="text-sm uppercase tracking-[0.35em]
+                   text-nebula-light"
+          >
+            Built with
+          </p>
 
-      <p
-        class="mt-6 text-lg leading-8
-               text-nebula-light"
-      >
-        This portfolio combines modern web technologies with a
-        visual identity inspired by galaxies, creative exploration
-        & digital art.
-      </p>
-    </div>
+          <h2
+            class="mt-4 text-4xl font-bold tracking-tight
+                   text-starlight md:text-5xl"
+          >
+            The technology behind this universe.
+          </h2>
 
-    <div
-      class="mt-12 grid gap-6
-             sm:grid-cols-2 lg:grid-cols-4"
-    >
-      <article
-        v-for="technology in technologies"
-        :key="technology.name"
-        class="group relative overflow-hidden rounded-3xl
-               border border-nebula/20 bg-cosmic/25 p-7
-               backdrop-blur-md transition duration-300
-               hover:-translate-y-2 hover:border-nebula/60
-               hover:bg-cosmic/40"
-      >
+          <p
+            class="mt-6 text-lg leading-8
+                   text-nebula-light"
+          >
+            This portfolio combines modern web technologies
+            with a visual identity inspired by galaxies,
+            creative exploration & digital art.
+          </p>
+        </div>
+
         <div
-          class="absolute -right-10 -top-10 h-28 w-28
-                 rounded-full bg-nebula/10 blur-2xl
-                 transition duration-300
-                 group-hover:bg-nebula/25"
-        ></div>
-
-        <p
-          class="relative text-xs uppercase tracking-[0.25em]
-                 text-nebula-light"
+          class="mt-12 grid gap-6
+                 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {{ technology.label }}
-        </p>
+          <article
+            v-for="technology in technologies"
+            :key="technology.name"
+            class="group relative flex min-h-[24rem]
+                   flex-col overflow-hidden rounded-3xl
+                   border border-nebula/20 bg-cosmic/25
+                   p-7 backdrop-blur-md
+                   transition duration-300
+                   hover:-translate-y-2
+                   hover:border-nebula/60
+                   hover:bg-cosmic/40"
+          >
+            <div
+              class="absolute -right-10 -top-10
+                     h-28 w-28 rounded-full
+                     bg-nebula/10 blur-2xl
+                     transition duration-300
+                     group-hover:bg-nebula/25"
+            ></div>
 
-        <h3
-          class="relative mt-5 text-2xl font-semibold
-                 text-starlight"
-        >
-          {{ technology.name }}
-        </h3>
+            <div
+              class="relative mb-7 flex h-14
+                     items-center gap-4"
+            >
+              <img
+                v-for="logo in technology.logos"
+                :key="logo.alt"
+                :src="logo.src"
+                :alt="logo.alt"
+                class="h-12 w-12 object-contain
+                       drop-shadow-[0_0_12px_rgba(157,205,220,0.18)]
+                       transition duration-300
+                       group-hover:-translate-y-1
+                       group-hover:scale-110"
+              />
+            </div>
 
-        <p
-          class="relative mt-4 leading-7
-                 text-nebula-light"
-        >
-          {{ technology.description }}
-        </p>
-      </article>
-    </div>
-  </div>
-</section>
+            <p
+              class="relative text-xs uppercase
+                     tracking-[0.25em]
+                     text-nebula-light"
+            >
+              {{ technology.label }}
+            </p>
+
+            <h3
+              class="relative mt-5 text-2xl
+                     font-semibold text-starlight"
+            >
+              {{ technology.name }}
+            </h3>
+
+            <p
+              class="relative mt-4 leading-7
+                     text-nebula-light"
+            >
+              {{ technology.description }}
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
