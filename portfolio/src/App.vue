@@ -2,28 +2,38 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
-import AppHeader from './components/layout/AppHeader.vue'
 import AdminHeader from './components/layout/AdminHeader.vue'
+import AppHeader from './components/layout/AppHeader.vue'
+import StarfieldBackground from './components/layout/StarfieldBackground.vue'
 
 const route = useRoute()
 
-const isAdminRoute = computed(() =>
-  route.path.startsWith('/admin')
-)
+const isAdminRoute = computed(() => {
+  return route.path.startsWith('/admin')
+})
 
-const isAdminLogin = computed(() =>
-  route.name === 'admin-login'
-)
+const isAdminLogin = computed(() => {
+  return route.name === 'admin-login'
+})
 </script>
 
 <template>
-  <div class="min-h-screen overflow-x-hidden">
-    <AppHeader v-if="!isAdminRoute" />
+  <div
+    class="relative min-h-screen
+           overflow-x-hidden"
+  >
+    <StarfieldBackground />
+
+    <AppHeader
+      v-if="!isAdminRoute"
+    />
 
     <AdminHeader
       v-else-if="!isAdminLogin"
     />
 
-    <RouterView />
+    <div class="relative z-10">
+      <RouterView />
+    </div>
   </div>
 </template>

@@ -17,6 +17,7 @@
 }
 
 html {
+  min-height: 100%;
   scroll-behavior: smooth;
 }
 
@@ -24,20 +25,17 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background:
-    radial-gradient(
-      circle at 20% 15%,
-      rgb(86 146 169 / 25%),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 80% 30%,
-      rgb(157 205 220 / 14%),
-      transparent 30%
-    ),
-    #062b43;
+  background-color: #062b43;
 }
 
+#app {
+  min-height: 100%;
+}
+
+#app{
+  position: relative;
+  background: transparent;
+}
 button,
 a {
   font: inherit;
