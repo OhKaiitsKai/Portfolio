@@ -276,18 +276,6 @@ async function deletePost(
   }
 }
 
-function formatDate(
-  timestamp: BlogPost['createdAt'],
-): string {
-  if (!timestamp) {
-    return 'Pending timestamp'
-  }
-
-  return new Intl.DateTimeFormat('en', {
-    dateStyle: 'medium',
-  }).format(timestamp.toDate())
-}
-
 onMounted(loadPosts)
 </script>
 
