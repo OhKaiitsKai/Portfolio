@@ -10,25 +10,25 @@ const technologies: Technology[] = [
     name: 'Vue.js',
     label: 'Frontend framework',
     description:
-      'Used to create a reactive, component-based and maintainable interface.',
+      'Used to create a reactive, component-based & maintainable interface.',
   },
   {
     name: 'TypeScript',
     label: 'Type safety',
     description:
-      'Helps prevent errors and keeps the project easier to understand as it grows.',
+      'Helps prevent errors & keeps the project easier to understand as it grows.',
   },
   {
     name: 'Tailwind CSS',
     label: 'Visual system',
     description:
-      'Used to build the responsive layout and the custom galactic interface.',
+      'Used to build the responsive layout & the custom galactic interface.',
   },
   {
     name: 'Firebase',
     label: 'Backend services',
     description:
-      'Provides storage, dynamic content, authentication and deployment tools.',
+      'Provides storage, dynamic content, authentication & deployment tools.',
   },
 ]
 </script>
@@ -59,7 +59,7 @@ const technologies: Technology[] = [
                  text-nebula-light md:text-xl"
         >
           Explore my work, creative process, interests
-          and personal projects.
+          & personal projects.
         </p>
 
         <div class="mt-8 flex flex-wrap gap-4">
@@ -133,7 +133,7 @@ const technologies: Technology[] = [
       >
         This portfolio combines modern web technologies with a
         visual identity inspired by galaxies, creative exploration
-        and digital art.
+        & digital art.
       </p>
     </div>
 

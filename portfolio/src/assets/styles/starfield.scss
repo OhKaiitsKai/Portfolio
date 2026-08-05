@@ -322,29 +322,47 @@
   }
 }
 
+.starfield-background__shooting-star--one {
+  top: 18%;
+  left: -10rem;
+}
+
 @keyframes shooting-star-one {
-  0%,
-  78% {
+  0%, 82% {
     opacity: 0;
     transform:
-      translate3d(0, 0, 0)
-      rotate(-35deg);
+      translate(0, 0)
+      rotate(-6deg);
   }
 
-  80% {
+  84% {
     opacity: 1;
   }
 
   88% {
-    opacity: 1;
+    transform:
+      translate(30vw, -6px)
+      rotate(-5deg);
   }
 
-  94%,
+  92% {
+    transform:
+      translate(65vw, 8px)
+      rotate(-7deg);
+  }
+
+  96% {
+    opacity: 1;
+    transform:
+      translate(95vw, -3px)
+      rotate(-6deg);
+  }
+
   100% {
     opacity: 0;
     transform:
-      translate3d(-125vw, 72vh, 0)
-      rotate(-35deg);
+      translate(115vw, 2px)
+      rotate(-6deg);
   }
 }
 
@@ -354,7 +372,7 @@
     opacity: 0;
     transform:
       translate3d(0, 0, 0)
-      rotate(-28deg);
+      rotate(-8deg);
   }
 
   86% {
@@ -369,8 +387,8 @@
   100% {
     opacity: 0;
     transform:
-      translate3d(-115vw, 58vh, 0)
-      rotate(-28deg);
+      translate3d(-115vw, 12vh, 0)
+      rotate(-8deg);
   }
 }
 
