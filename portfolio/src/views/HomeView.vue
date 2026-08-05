@@ -209,15 +209,16 @@ const technologies: Technology[] = [
                      items-center gap-4"
             >
               <img
-                v-for="logo in technology.logos"
-                :key="logo.alt"
-                :src="logo.src"
-                :alt="logo.alt"
-                class="h-12 w-12 object-contain
-                       drop-shadow-[0_0_12px_rgba(157,205,220,0.18)]
-                       transition duration-300
-                       group-hover:-translate-y-1
-                       group-hover:scale-110"
+                  v-for="logo in technology.logos"
+                  :key="logo.alt"
+                  :src="logo.src"
+                  :alt="logo.alt"
+                  class="h-12 w-12 object-contain
+                   mix-blend-overlay
+                   drop-shadow-[0_0_12px_rgba(157,205,220,0.18)]
+                   transition duration-300
+                   group-hover:-translate-y-1
+                   group-hover:scale-110"
               />
             </div>
 
